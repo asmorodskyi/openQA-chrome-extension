@@ -5,7 +5,7 @@ function trackJob(event) {
 
 function insertRow(firstRow, secondRow) {
     var table = document.getElementById("openQAjobs");
-    var row = table.insertRow(0);
+    var row = table.insertRow(table.rows.length);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     cell1.innerHTML = firstRow;
@@ -15,6 +15,9 @@ function insertRow(firstRow, secondRow) {
 document.getElementById('trackJob').addEventListener('click', trackJob);
 window.onload = function () {
     chrome.runtime.sendMessage({messageid: "GetJobs"}, function (response) {
-        insertRow("JOB URL",response+ " !!!");
+        insertRow("JOB URL","JOB STATUS");
+        for (var i = 0; i < response.length; i++) {
+            insertRow(response[i],"!");
+        }
     });
 }

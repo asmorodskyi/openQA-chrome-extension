@@ -62,6 +62,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         });
     }
     if (request.messageid === "GetJobs") {
-        sendResponse(JSON.stringify(jobIds));
+        sendResponse(jobIds);
     }
 });
