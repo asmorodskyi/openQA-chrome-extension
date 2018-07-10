@@ -1,20 +1,19 @@
 var jobIds = [];
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-    for (var key in jobIds) {
+    for (var i = 0; i < jobIds.length; i++) {
         var xhr = new XMLHttpRequest();
-        var URLString = jobIds[key].origin+"/api/v1/jobs/"+key.substring(key.lastIndexOf("/")+1,key.length);
-        console.log("Requesting URL-"+ URLString);
-        var requestURL = new URL(URLString);
+        console.log("Requesting URL-"+ jobIds[i]);
+        var requestURL = new URL(jobIds[i]);
         xhr.onreadystatechange = function() {
             if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                var jobJSON = JSON.parse(this.responseText);
+                var jobJSON = JSON.parse(this.response);
                 if(jobJSON["job"]["state"] === "done" || jobJSON["job"]["state"] === "canceled") {
-                    console.log("Job " + key + " is done or canceled ");
-                    delete jobIds[key];
+                    console.log("Job " + jobIds[i] + " is done or canceled ");
+                    jobIds.splice(jobIds[i],1);
                     new Notification('openQAChecker', {
                         icon: '48.png',
-                        body: 'Job ' + key + "is finished"
+                        body: 'Job ' + jobJSON["job"]["name"] + "is finished"
                       });
                 }
                 console.log("Current job state - " + jobJSON["job"]["state"]);
@@ -42,8 +41,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.tabs.query({active: true}, function (tabs) {
             if (tabs.length !== 0 && /\/tests\/\d{1,7}/.test(tabs[0].url)) {
                 var exists = false;
-                for(var key in jobIds){
-                    if(key === tabs[0].url) {
+                var url = new URL(tabs[0].url);
+                // url to query openQA for job status
+                var URLString = url.origin+"/api/v1/jobs/"+url.href.substring(url.href.lastIndexOf("/")+1,url.href.length);
+                for (var i = 0; i < jobIds.length; i++) { // checking if we already processing this URL 
+                    if(jobIds[i] === URLString) {
                         exists=true;
                         break;
                     }
@@ -51,9 +53,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if(exists) {
                     console.log("Already processing "+ tabs[0].url)
                 }else {
-                    var url = new URL(tabs[0].url);
                     console.log('Start tracking ' + url.pathname + " for host - " + url.hostname);
-                    jobIds[tabs[0].url]=url;
+                    jobIds.push(URLString);
                 }
             } else {
                 console.log('Wrong tab');
