@@ -15,9 +15,19 @@ function insertRow(firstRow, secondRow) {
 document.getElementById('trackJob').addEventListener('click', trackJob);
 window.onload = function () {
     chrome.runtime.sendMessage({messageid: "GetJobs"}, function (response) {
-        insertRow("JOB URL","JOB STATUS");
+        insertRow("JOB URL", "JOB STATUS");
         for (var i = 0; i < response.length; i++) {
-            insertRow(response[i],"!");
+            var xhr = new XMLHttpRequest();
+            var requestURL = new URL(response[i]);
+            xhr.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    var jobJSON = JSON.parse(this.response);
+                    insertRow(jobJSON["job"]["name"], jobJSON["job"]["state"]);
+                }
+            }
+            xhr.open("GET", requestURL, true);
+            xhr.send();
+
         }
     });
 }
