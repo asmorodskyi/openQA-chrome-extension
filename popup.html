@@ -1,28 +1,39 @@
 <html>
-  <head>
+
+<head>
     <title>openQA ext</title>
     <style>
-      body {
-        text-align: center;
-      }
+        body {
+            text-align: center;
+        }
 
-      #hydrateImage {
-        width: 100px;
-        margin: 5px;
-      }
+        #hydrateImage {
+            width: 100px;
+            margin: 5px;
+        }
 
-      button {
-        margin: 5px;
-        outline: none;
-      }
+        button {
+            margin: 5px;
+            outline: none;
+        }
 
-      button:hover {
-        outline: #80DEEA dotted thick;
-      }
+        button:hover {
+            outline: #80DEEA dotted thick;
+        }
+
+        td {
+            border: 1px solid #999;
+            padding: 0.1em 1em;
+        }
     </style>
-  </head>
-  <body>
-      <button id='setAlarm'>Set Alarm</button>
-   <script src="popup.js"></script>
-  </body>
+</head>
+
+<body>
+    <table id='openQAjobs'>
+
+    </table>
+    <button id='trackJob'>Track</button>
+    <script src="popup.js"></script>
+</body>
+
 </html>

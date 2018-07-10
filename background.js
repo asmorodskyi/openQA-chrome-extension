@@ -38,7 +38,7 @@ chrome.runtime.onInstalled.addListener(function () {
 })
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.messageid === "CreateAlarm") {
+    if (request.messageid === "TrackJob") {
         chrome.tabs.query({active: true}, function (tabs) {
             if (tabs.length !== 0 && /\/tests\/\d{1,7}/.test(tabs[0].url)) {
                 var exists = false;
@@ -59,5 +59,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 console.log('Wrong tab');
             }
         });
+    }
+    if (request.messageid === "GetJobs") {
+        sendResponse(JSON.stringify(jobIds));
     }
 });
