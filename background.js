@@ -16,7 +16,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
                         body: 'Job ' + jobJSON["job"]["name"] + "is finished"
                       });
                 }
-                console.log("Current job state - " + jobJSON["job"]["state"]);
+                console.log("Job with id=" + jobJSON["job"]["id"] + "has state " + jobJSON["job"]["state"]);
             }
         }
         xhr.open("GET", requestURL, true);

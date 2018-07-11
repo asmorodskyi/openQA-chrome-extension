@@ -15,7 +15,7 @@ function insertRow(firstRow, secondRow) {
 document.getElementById('trackJob').addEventListener('click', trackJob);
 window.onload = function () {
     chrome.runtime.sendMessage({messageid: "GetJobs"}, function (response) {
-        insertRow("JOB URL", "JOB STATUS");
+        insertRow("JOB NAME", "JOB STATUS");
         for (var i = 0; i < response.length; i++) {
             var xhr = new XMLHttpRequest();
             var requestURL = new URL(response[i]);
