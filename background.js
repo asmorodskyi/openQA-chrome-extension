@@ -1,6 +1,8 @@
 var jobIds = [];
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
+    chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
+    chrome.browserAction.setBadgeText({text:jobIds.length.toString()});
     for (var i = 0; i < jobIds.length; i++) {
         var xhr = new XMLHttpRequest();
         console.log("Requesting URL-"+ jobIds[i]);
