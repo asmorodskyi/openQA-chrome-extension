@@ -30,7 +30,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.alarms.get("openQAChecker", function(alarm) {
         if(alarm === undefined ){
             console.log("First pluging start. Creating alarm");
-            chrome.alarms.create("openQAChecker", {periodInMinutes: 0.1});
+            chrome.alarms.create("openQAChecker", {periodInMinutes: 2});
         }
         else{
             console.log("Alarm already exists");
