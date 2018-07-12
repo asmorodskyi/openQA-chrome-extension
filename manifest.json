@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "openQA-ext",
     "description": "Chrome extension able to subscribe to events for some certain job opened currently in browser",
-    "version": "0.2",
+    "version": "0.3",
     "author": "Anton Smorodskyi",
     "background": {
         "scripts": ["background.js"],
