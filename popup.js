@@ -27,7 +27,6 @@ window.onload = function () {
             }
             xhr.open("GET", requestURL, true);
             xhr.send();
-
         }
     });
 }

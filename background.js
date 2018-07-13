@@ -74,5 +74,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.storage.local.get(['openQACheckJSON'], function (result) {
             sendResponse(result.openQACheckJSON);
         });
+        return true;
     }
 });
